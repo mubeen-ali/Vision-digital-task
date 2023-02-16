@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1676547508878-1" author="mubeenali (generated)">
+        <dropColumn columnName="user_type" tableName="users"/>
+    </changeSet>
+    <changeSet id="1676547508878-2" author="mubeenali (generated)">
+        <addColumn tableName="users">
+            <column defaultValue="customer" name="user_type" type="varchar(10)">
+                <constraints nullable="false" validateNullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet id="1676547508878-3" author="mubeenali (generated)">
+        <addDefaultValue columnDataType="varchar(10)" columnName="user_type" defaultValue="customer" tableName="users"/>
+    </changeSet>
+
+</databaseChangeLog>
