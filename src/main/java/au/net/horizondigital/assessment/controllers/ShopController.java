@@ -1,12 +1,17 @@
 package au.net.horizondigital.assessment.controllers;
 
 import au.net.horizondigital.assessment.bl.QueueHandler;
-import au.net.horizondigital.assessment.entities.*;
+import au.net.horizondigital.assessment.entities.CoffeeItem;
+import au.net.horizondigital.assessment.entities.CoffeeShop;
+import au.net.horizondigital.assessment.entities.Customer;
+import au.net.horizondigital.assessment.entities.Order;
 import au.net.horizondigital.assessment.enums.OrderStatus;
-import au.net.horizondigital.assessment.exceptions.DataNotFoundException;
 import au.net.horizondigital.assessment.repos.ShopPublicData;
 import au.net.horizondigital.assessment.services.DatabaseService;
 import au.net.horizondigital.assessment.vo.QueueDetails;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
+@Api(description = "Controller that expose coffee shop specific endpoints")
 public class ShopController {
     @Autowired
     private DatabaseService databaseService;
@@ -27,6 +33,8 @@ public class ShopController {
     @Autowired
     private QueueHandler queueHandler;
 
+    @ApiOperation(value = "Endpoint to configure coffee shop",
+            notes = "This endpoint is to be used by shop owner for configuration of shop i.e. shop details, menu etc. Currently only single queue support is added")
     @PostMapping("/configureShop")
     public ResponseEntity configureShop(@RequestBody CoffeeShop coffeeShop) {
         log.debug("coffee shop configuration request received for {}", coffeeShop);
@@ -35,6 +43,8 @@ public class ShopController {
     }
 
 
+    @ApiOperation(value = "Endpoint to find nearest shops",
+            notes = "location parameter will be matched with location field of coffee shops and will be returned")
     @GetMapping("/fetchNearestShops")
     public ResponseEntity fetchNearestShops(@RequestParam String location) {
         log.info("Going to fetch nearest shops for location: {}", location);
@@ -42,6 +52,7 @@ public class ShopController {
         return new ResponseEntity(shops, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Endpoint to fetch coffee menu of shop")
     @GetMapping("/fetchShopMenu")
     public ResponseEntity fetchShopMenuItems(@RequestParam long shopId) {
         log.info("Going to fetch menu for shopId: {}", shopId);
@@ -50,6 +61,8 @@ public class ShopController {
         return new ResponseEntity<>(menuItems, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Endpoint to get queue details of coffee shop",
+            notes = "This endpoint will be used by show operator to see queue size, and total number of waiting customers in queue")
     @GetMapping("/getQueueDetails")
     public ResponseEntity getQueueDetails(@RequestParam long shopId) {
         log.info("Going to fetch number of waiting customers in queue of shopId {}", shopId);
@@ -63,6 +76,8 @@ public class ShopController {
         return new ResponseEntity(queueDetails, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Endpoint to get names of waiting customers",
+            notes = "This endpoint will be used by shop operator to fetch list of names of customers that are waiting in queue")
     @GetMapping("/getWaitingCustomerNames")
     public ResponseEntity getWaitingCustomerNames(@RequestParam long shopId) {
         log.info("Going to fetch waiting customer's names for shopId {}", shopId);
@@ -75,6 +90,8 @@ public class ShopController {
         return new ResponseEntity(customerNames, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Endpoint to server a customer from queue",
+            notes = "This endpoint will be used by shop operator, it will remove first customer from queue, serve it, and mark it's order as processed")
     @GetMapping("/serverCustomer")
     public ResponseEntity serverCustomer(@RequestParam long shopId) {
         BlockingQueue<Order> queue = queueHandler.getShopQueue(shopId);
