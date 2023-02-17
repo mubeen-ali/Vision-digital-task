@@ -2,6 +2,7 @@ package au.net.horizondigital.assessment.controllers;
 
 import au.net.horizondigital.assessment.bl.QueueHandler;
 import au.net.horizondigital.assessment.entities.CoffeeItem;
+import au.net.horizondigital.assessment.entities.Customer;
 import au.net.horizondigital.assessment.entities.Order;
 import au.net.horizondigital.assessment.entities.OrderItems;
 import au.net.horizondigital.assessment.exceptions.DataNotFoundException;
@@ -26,6 +27,13 @@ public class CustomerController {
 
     @Autowired
     private QueueHandler queueHandler;
+
+    @PostMapping("/registerCustomer")
+    public ResponseEntity registerCustomer(@RequestBody Customer customer) {
+        log.info("Going to register customer with userId {}", customer.getUserId());
+        Customer registeredCustomer = databaseService.registerCustomer(customer);
+        return new ResponseEntity("Customer registered Successfully. id: " + registeredCustomer.getId(), HttpStatus.OK);
+    }
 
     @PostMapping("/placeOrder")
     public ResponseEntity placeOrder(@RequestBody Order order) throws InterruptedException {
@@ -53,7 +61,7 @@ public class CustomerController {
     private void validateOrderItems(Order order) {
         Set<CoffeeItem> menuItems = order.getShop().getCoffeeMenu().getMenuItems();
         Set<CoffeeItem> itemList = order.getOrderItems().stream().map(OrderItems::getItem).collect(Collectors.toSet());
-        if(!menuItems.containsAll(itemList)){
+        if (!menuItems.containsAll(itemList)) {
             throw new DataNotFoundException("Provided item id doesn't exits in shop's menu. Please provide valid item from menu ");
 
         }

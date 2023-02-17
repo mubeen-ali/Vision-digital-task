@@ -2,6 +2,7 @@ package au.net.horizondigital.assessment.services;
 
 import au.net.horizondigital.assessment.entities.*;
 import au.net.horizondigital.assessment.enums.OrderStatus;
+import au.net.horizondigital.assessment.exceptions.DataAlreadyExists;
 import au.net.horizondigital.assessment.exceptions.DataNotFoundException;
 import au.net.horizondigital.assessment.repos.*;
 import lombok.extern.slf4j.Slf4j;
@@ -99,5 +100,13 @@ public class DatabaseService {
 
         coffeeMenu.setMenuItems(savedItems);
         return menuRepository.save(coffeeMenu);
+    }
+
+    public Customer registerCustomer(Customer customer){
+        Customer user = userRepository.findUserByUserId(customer.getUserId());
+        if(null != user){
+            throw new DataAlreadyExists("UserId already exists. Please choose some other userId");
+        }
+       return userRepository.save(customer);
     }
 }

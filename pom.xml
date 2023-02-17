@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>au.net.horizondigital</groupId>
 	<artifactId>assessment</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>assessment</name>
 	<description>Microservices Engineer Assessment Project v1.0</description>
 	<properties>
@@ -75,6 +75,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>mubeen-assessment</finalName>
 	</build>
 
 </project>

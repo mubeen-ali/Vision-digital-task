@@ -5,12 +5,10 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd"
         objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
-    <include file="db/changelog/2023/02/16-01-changelog.xml"/>
-    <include file="db/changelog/2023/02/16-02-changelog.xml"/>
-    <changeSet id="1676536366733-1" author="mubeenali (generated)">
+    <changeSet id="1676570730814-1" author="mubeenali (generated)">
         <createSequence incrementBy="1" sequenceName="hibernate_sequence" startValue="1"/>
     </changeSet>
-    <changeSet id="1676536366733-2" author="mubeenali (generated)">
+    <changeSet id="1676570730814-2" author="mubeenali (generated)">
         <createTable tableName="coffee_items">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_coffee_items"/>
@@ -23,14 +21,14 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-3" author="mubeenali (generated)">
+    <changeSet id="1676570730814-3" author="mubeenali (generated)">
         <createTable tableName="coffee_menu">
             <column name="id" type="INT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_coffee_menu"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-4" author="mubeenali (generated)">
+    <changeSet id="1676570730814-4" author="mubeenali (generated)">
         <createTable tableName="coffee_shops">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_coffee_shops"/>
@@ -52,7 +50,7 @@
             <column name="coffee_menu_id" type="INT"/>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-5" author="mubeenali (generated)">
+    <changeSet id="1676570730814-5" author="mubeenali (generated)">
         <createTable tableName="menu_items">
             <column name="coffee_items_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_menu_items"/>
@@ -62,7 +60,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-6" author="mubeenali (generated)">
+    <changeSet id="1676570730814-6" author="mubeenali (generated)">
         <createTable tableName="order_items">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_order_items"/>
@@ -78,7 +76,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-7" author="mubeenali (generated)">
+    <changeSet id="1676570730814-7" author="mubeenali (generated)">
         <createTable tableName="orders">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_orders"/>
@@ -100,7 +98,7 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-8" author="mubeenali (generated)">
+    <changeSet id="1676570730814-8" author="mubeenali (generated)">
         <createTable tableName="orders_order_items">
             <column name="order_id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_orders_orderitems"/>
@@ -110,11 +108,12 @@
             </column>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-9" author="mubeenali (generated)">
+    <changeSet id="1676570730814-9" author="mubeenali (generated)">
         <createTable tableName="users">
             <column name="id" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="pk_users"/>
             </column>
+            <column name="user_type" type="VARCHAR(31)"/>
             <column name="user_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
@@ -124,63 +123,60 @@
             <column name="name" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueNumeric="1" name="user_type" type="int">
-                <constraints nullable="false"/>
-            </column>
             <column name="mobile_number" type="VARCHAR(255)"/>
             <column name="address" type="VARCHAR(255)"/>
         </createTable>
     </changeSet>
-    <changeSet id="1676536366733-10" author="mubeenali (generated)">
+    <changeSet id="1676570730814-10" author="mubeenali (generated)">
         <addUniqueConstraint columnNames="name" constraintName="uc_coffee_items_name" tableName="coffee_items"/>
     </changeSet>
-    <changeSet id="1676536366733-11" author="mubeenali (generated)">
+    <changeSet id="1676570730814-11" author="mubeenali (generated)">
         <addUniqueConstraint columnNames="order_items_id" constraintName="uc_orders_order_items_orderitems"
                              tableName="orders_order_items"/>
     </changeSet>
-    <changeSet id="1676536366733-12" author="mubeenali (generated)">
+    <changeSet id="1676570730814-12" author="mubeenali (generated)">
         <addUniqueConstraint columnNames="user_id" constraintName="uc_users_user" tableName="users"/>
     </changeSet>
-    <changeSet id="1676536366733-13" author="mubeenali (generated)">
+    <changeSet id="1676570730814-13" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="coffee_menu_id" baseTableName="coffee_shops"
                                  constraintName="FK_COFFEE_SHOPS_ON_COFFEE_MENU" referencedColumnNames="id"
                                  referencedTableName="coffee_menu"/>
     </changeSet>
-    <changeSet id="1676536366733-14" author="mubeenali (generated)">
+    <changeSet id="1676570730814-14" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="customer_id" baseTableName="orders"
                                  constraintName="FK_ORDERS_ON_CUSTOMER" referencedColumnNames="id"
                                  referencedTableName="users"/>
     </changeSet>
-    <changeSet id="1676536366733-15" author="mubeenali (generated)">
+    <changeSet id="1676570730814-15" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="shop_id" baseTableName="orders" constraintName="FK_ORDERS_ON_SHOP"
                                  referencedColumnNames="id" referencedTableName="coffee_shops"/>
     </changeSet>
-    <changeSet id="1676536366733-16" author="mubeenali (generated)">
+    <changeSet id="1676570730814-16" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="item_id" baseTableName="order_items"
                                  constraintName="FK_ORDER_ITEMS_ON_ITEM" referencedColumnNames="id"
                                  referencedTableName="coffee_items"/>
     </changeSet>
-    <changeSet id="1676536366733-17" author="mubeenali (generated)">
+    <changeSet id="1676570730814-17" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="order_items"
                                  constraintName="FK_ORDER_ITEMS_ON_ORDER" referencedColumnNames="id"
                                  referencedTableName="orders"/>
     </changeSet>
-    <changeSet id="1676536366733-18" author="mubeenali (generated)">
+    <changeSet id="1676570730814-18" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="coffee_items_id" baseTableName="menu_items"
                                  constraintName="fk_menite_on_coffee_item" referencedColumnNames="id"
                                  referencedTableName="coffee_items"/>
     </changeSet>
-    <changeSet id="1676536366733-19" author="mubeenali (generated)">
+    <changeSet id="1676570730814-19" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="coffee_menu_id" baseTableName="menu_items"
                                  constraintName="fk_menite_on_coffee_menu" referencedColumnNames="id"
                                  referencedTableName="coffee_menu"/>
     </changeSet>
-    <changeSet id="1676536366733-20" author="mubeenali (generated)">
+    <changeSet id="1676570730814-20" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="order_id" baseTableName="orders_order_items"
                                  constraintName="fk_ordordite_on_order" referencedColumnNames="id"
                                  referencedTableName="orders"/>
     </changeSet>
-    <changeSet id="1676536366733-21" author="mubeenali (generated)">
+    <changeSet id="1676570730814-21" author="mubeenali (generated)">
         <addForeignKeyConstraint baseColumnNames="order_items_id" baseTableName="orders_order_items"
                                  constraintName="fk_ordordite_on_order_items" referencedColumnNames="id"
                                  referencedTableName="order_items"/>

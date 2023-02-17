@@ -1,5 +1,6 @@
 package au.net.horizondigital.assessment.controllers;
 
+import au.net.horizondigital.assessment.exceptions.DataAlreadyExists;
 import au.net.horizondigital.assessment.exceptions.DataNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,12 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
     public ResponseEntity handleDataNotFoundException(DataNotFoundException ex, WebRequest request) {
         log.error("##DataNotFoundException##", ex);
         return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(value = DataAlreadyExists.class)
+    public ResponseEntity handleDataAlreadyExistsException(DataAlreadyExists ex, WebRequest request){
+        log.error("##DataAlreadyExistsException##", ex.getMessage());
+        return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(value = Exception.class)
