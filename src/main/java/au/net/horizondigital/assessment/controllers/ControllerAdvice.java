@@ -15,13 +15,13 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = DataNotFoundException.class)
     public ResponseEntity handleDataNotFoundException(DataNotFoundException ex, WebRequest request) {
-        log.error("##DataNotFoundException##", ex);
+        log.error(ex.getMessage());
         return new ResponseEntity(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(value = DataAlreadyExists.class)
     public ResponseEntity handleDataAlreadyExistsException(DataAlreadyExists ex, WebRequest request){
-        log.error("##DataAlreadyExistsException##", ex.getMessage());
+        log.error(ex.getMessage());
         return new ResponseEntity(ex.getMessage(), HttpStatus.CONFLICT);
     }
 
